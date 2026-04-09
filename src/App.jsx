@@ -1,29 +1,44 @@
 import { useState } from 'react'
 import './App.css'
+import { FiPlusSquare, FiList, FiDollarSign, FiShoppingBag } from 'react-icons/fi'
+import { HiOutlineBuildingStorefront } from 'react-icons/hi2'
 
-import Sidebar from './components/common/Sidebar'
 import ProductRegisterPage from './pages/ProductRegisterPage'
 import SalesListPage from './pages/SalesListPage'
 import SettlementPage from './pages/SettlementPage'
 import PickupWaitingPage from './pages/PickupWaitingPage'
 import StoreInfoPage from './pages/StoreInfoPage'
 
-const MENU_ITEMS = [
-  '상품 등록',
-  '판매 상품 리스트',
-  '정산',
-  '픽업 대기 상품',
-  '매장 정보',
+const NAV_ITEMS = [
+  {
+    key: '상품 등록',
+    label: '등록',
+    icon: FiPlusSquare,
+  },
+  {
+    key: '판매 상품 리스트',
+    label: '목록',
+    icon: FiList,
+  },
+  {
+    key: '정산',
+    label: '정산',
+    icon: FiDollarSign,
+  },
+  {
+    key: '픽업 대기 상품',
+    label: '픽업',
+    icon: FiShoppingBag,
+  },
+  {
+    key: '매장 정보',
+    label: '매장',
+    icon: HiOutlineBuildingStorefront,
+  },
 ]
 
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [activePage, setActivePage] = useState('상품 등록')
-
-  const handleSelectPage = (page) => {
-    setActivePage(page)
-    setIsSidebarOpen(false)
-  }
 
   const renderPage = () => {
     switch (activePage) {
@@ -44,35 +59,31 @@ function App() {
 
   return (
     <div className="app-shell">
-      {isSidebarOpen && (
-        <div
-          className="sidebar-backdrop"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
-
-      <Sidebar
-        isOpen={isSidebarOpen}
-        menuItems={MENU_ITEMS}
-        activePage={activePage}
-        onClose={() => setIsSidebarOpen(false)}
-        onSelectPage={handleSelectPage}
-      />
-
       <main className="mobile-frame">
-        <header className="top-bar">
-          <button
-            className="icon-button"
-            onClick={() => setIsSidebarOpen(true)}
-            aria-label="메뉴 열기"
-          >
-            ☰
-          </button>
+        <header className="top-bar simple">
           <div className="top-bar-title">FOODPICKER SELLER</div>
-          <div className="top-bar-placeholder" />
         </header>
 
-        <section className="screen-area">{renderPage()}</section>
+        <section className="screen-area with-bottom-nav">{renderPage()}</section>
+
+        <nav className="bottom-nav">
+          {NAV_ITEMS.map((item) => {
+            const Icon = item.icon
+            const isActive = activePage === item.key
+
+            return (
+              <button
+                key={item.key}
+                type="button"
+                className={`bottom-nav-item ${isActive ? 'active' : ''}`}
+                onClick={() => setActivePage(item.key)}
+              >
+                <Icon className="bottom-nav-icon" />
+                <span className="bottom-nav-label">{item.label}</span>
+              </button>
+            )
+          })}
+        </nav>
       </main>
     </div>
   )

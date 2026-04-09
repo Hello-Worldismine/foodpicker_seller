@@ -29,7 +29,12 @@ function PickupWaitingPage() {
                   <td>{row.id}</td>
                   <td>{row.productName}</td>
                   <td>{row.pickupTime}</td>
-                  <td>{row.buyer}</td>
+                  <td>
+                    <div className="buyer-info">
+                      <div className="buyer-name">{row.buyer}</div>
+                      <div className="buyer-phone">{row.buyerPhone}</div>
+                    </div>
+                  </td>
                   <td>
                     <button
                       className="bell-button"

@@ -1,71 +1,106 @@
-import { useState } from 'react'
 import Card from '../components/common/Card'
 import PageHeader from '../components/common/PageHeader'
-import FieldBlock from '../components/store/FieldBlock'
+import { FiEdit2, FiMapPin, FiRefreshCw, FiVolume2 } from 'react-icons/fi'
 
 function StoreInfoPage() {
-  const [storeInfo, setStoreInfo] = useState({
-    name: '푸드피커 서면점',
-    storeNumber: 'A-102',
-    owner: '김대표',
-    address: '부산광역시 부산진구 서면로 00',
-    phone: '051-123-4567',
-    hours: '09:00 ~ 21:00',
-  })
-
-  const handleChange = (key, value) => {
-    setStoreInfo((prev) => ({
-      ...prev,
-      [key]: value,
-    }))
+  const storeInfo = {
+    name: '푸드피커 베이커리 서초점',
+    storeNumber: 'FP-SEOCHO-001',
+    owner: '김피커',
+    address: '서울특별시 서초구 서초동 123-45',
+    phone: '02-555-1234',
+    weekdayHours: '08:00 - 22:00',
+    weekendHours: '10:00 - 20:00',
   }
 
   return (
-    <div className="page-content">
+    <div className="page-content store-page">
       <PageHeader title="매장 정보" />
 
-      <div className="bottom-centered-button-wrap top-button-gap">
-        <button className="primary-button">매장 정보 수정하기</button>
+      <div className="store-edit-button-wrap">
+        <button className="store-edit-button">
+          <FiEdit2 />
+          <span>매장 정보 수정하기</span>
+        </button>
       </div>
 
-      <Card>
-        <div className="field-stack">
-          <FieldBlock
-            label="이름"
-            value={storeInfo.name}
-            onChange={(value) => handleChange('name', value)}
-          />
-          <FieldBlock
-            label="번호"
-            value={storeInfo.storeNumber}
-            onChange={(value) => handleChange('storeNumber', value)}
-          />
-          <FieldBlock
-            label="대표자"
-            value={storeInfo.owner}
-            onChange={(value) => handleChange('owner', value)}
-          />
-          <FieldBlock
-            label="주소"
-            value={storeInfo.address}
-            onChange={(value) => handleChange('address', value)}
-          />
-          <FieldBlock
-            label="연락처"
-            value={storeInfo.phone}
-            onChange={(value) => handleChange('phone', value)}
-          />
-          <FieldBlock
-            label="영업시간"
-            value={storeInfo.hours}
-            onChange={(value) => handleChange('hours', value)}
-          />
+      <Card className="store-info-card">
+        <div className="store-info-section">
+          <div className="store-field">
+            <div className="store-field-label">이름</div>
+            <div className="store-field-box">{storeInfo.name}</div>
+          </div>
+
+          <div className="store-field">
+            <div className="store-field-label">번호(ID)</div>
+            <div className="store-field-box">{storeInfo.storeNumber}</div>
+          </div>
+
+          <div className="store-field">
+            <div className="store-field-label">대표자</div>
+            <div className="store-field-box">{storeInfo.owner}</div>
+          </div>
+
+          <div className="store-field">
+            <div className="store-field-label">주소</div>
+            <div className="store-field-box with-icon">
+              <span>{storeInfo.address}</span>
+              <FiMapPin className="store-field-inline-icon" />
+            </div>
+          </div>
+
+          <div className="store-field">
+            <div className="store-field-label">연락처</div>
+            <div className="store-field-box">{storeInfo.phone}</div>
+          </div>
+
+          <div className="store-field">
+            <div className="store-field-label">영업시간</div>
+            <div className="store-hours-box">
+              <div className="store-hours-row">
+                <span className="store-hours-day">평일</span>
+                <span className="store-hours-time">{storeInfo.weekdayHours}</span>
+              </div>
+              <div className="store-hours-row">
+                <span className="store-hours-day">주말</span>
+                <span className="store-hours-time">{storeInfo.weekendHours}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </Card>
 
-      <div className="split-button-wrap">
-        <button className="outline-button fill">재고 연동 템플릿</button>
-        <button className="outline-button fill">단골 알림 서비스</button>
+      <div className="store-service-grid">
+        <button className="store-service-card" type="button">
+          <div className="store-service-icon blue">
+            <FiRefreshCw />
+          </div>
+          <div className="store-service-text">
+            재고 연동
+            <br />
+            템플릿
+          </div>
+        </button>
+
+        <button className="store-service-card" type="button">
+          <div className="store-service-icon peach">
+            <FiVolume2 />
+          </div>
+          <div className="store-service-text">
+            단골 알림
+            <br />
+            서비스
+          </div>
+        </button>
+      </div>
+
+      <div className="store-banner-card">
+        <div className="store-banner-overlay" />
+        <div className="store-banner-text">
+          식당 낭비를 줄이는 가치 있는
+          <br />
+          발견을, Food Picker와 함께
+        </div>
       </div>
     </div>
   )
